@@ -8,10 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.HeadlessException;
 import java.awt.TextField;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  *
@@ -41,17 +38,18 @@ public class FinestraPrincipale extends JFrame {
         
         
         
-        JPanel tabellaPanel = new JPanel();
         tabella = new Tabella();
-        tabellaPanel.add(tabella); 
+        JScrollPane tabellaPanel = new JScrollPane(tabella);
+        tabella.setFillsViewportHeight(true);
         
         
         Container contentPane = this.getContentPane();
-        contentPane.add(pannelloRicerca, BorderLayout.NORTH);
-        contentPane.add(tabellaPanel,BorderLayout.CENTER);
+        contentPane.add(pannelloRicerca, BorderLayout.SOUTH);
+        contentPane.add(tabella.getTableHeader(), BorderLayout.PAGE_START);
+        contentPane.add(tabella,BorderLayout.CENTER);
         
         this.pack();
-        this.setResizable(false);
+        //this.setResizable(false);
         this.setVisible(true);
     }
     
