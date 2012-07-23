@@ -4,6 +4,7 @@
  */
 package programmazioneadoggetti;
 
+import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
@@ -14,8 +15,10 @@ import javax.swing.table.TableModel;
 public class TabellaDati implements TableModel {
     private String[] columnNames;
     private Casella[][] memoria;
+    private JTable jtable;
     
-    public TabellaDati(int rows, int columns) {
+    public TabellaDati(JTable jtable, int rows, int columns) {
+        this.jtable = jtable;
         this.memoria = new Casella[rows][columns];
         this.columnNames = new String[columns];
         char carattere = 'A'-1;
@@ -72,19 +75,30 @@ public class TabellaDati implements TableModel {
             return true;
     }
 
+    public Casella getRoughValueAt(int rowIndex, int columnIndex) {
+        return memoria[rowIndex][columnIndex];
+    }
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Casella casella =memoria[rowIndex][columnIndex];
         
+        
         if (casella == null)
             return null;
-        else
+        else {
+            int x = jtable.getSelectedRow();
+            int y = jtable.getSelectedColumn();
+            if (x == rowIndex && y == columnIndex )
+                return casella.getFormula();
             return casella.getRisultato();
+        }
     }
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        memoria[rowIndex][columnIndex] = Casella.NewCasella((String)aValue);
+        memoria[rowIndex][columnIndex] = Casella.NewCasella((String)aValue, this);
+        jtable.tableChanged(null);
     }
 
     @Override

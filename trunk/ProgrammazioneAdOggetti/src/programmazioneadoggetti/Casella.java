@@ -14,8 +14,15 @@ abstract public class Casella {
     
     abstract public String getRisultato();
     
-    static public Casella NewCasella(String testo){
-        return new CasellaTesto(testo);
+    static public Casella NewCasella(String testo, TabellaDati tabella){
+        try {
+            Casella cas = new CasellaFormula(testo,tabella);
+            System.out.println("Convertita in casella formula");
+            return cas;
+        } catch (ConversioneNonRiuscitaException ex) {
+            System.out.println("Convertita in casella di testo");
+            return new CasellaTesto(testo);
+        }
     }
 
 }
