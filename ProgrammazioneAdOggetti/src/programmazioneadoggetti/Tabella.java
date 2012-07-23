@@ -12,10 +12,12 @@ import javax.swing.JTable;
  */
 public class Tabella extends JTable {
     private TabellaDati tabellaDati;
+    static private int righe = 20;
+    static private int colonne = 10;
 
     public Tabella() {
-        super(20, 10);
-        this.tabellaDati = new TabellaDati(20, 10);
+        super(righe, colonne);
+        this.tabellaDati = new TabellaDati(this, righe, colonne);
         this.setModel(tabellaDati);
     }
     
