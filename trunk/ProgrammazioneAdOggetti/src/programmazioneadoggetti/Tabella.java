@@ -20,5 +20,9 @@ public class Tabella extends JTable {
         this.tabellaDati = new TabellaDati(this, righe, colonne);
         this.setModel(tabellaDati);
     }
+
+    public TabellaDati getTabellaDati() {
+        return tabellaDati;
+    }
     
 }

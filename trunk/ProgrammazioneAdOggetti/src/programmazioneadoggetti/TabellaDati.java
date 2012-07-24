@@ -17,10 +17,16 @@ public class TabellaDati implements TableModel {
     private Casella[][] memoria;
     private JTable jtable;
     
+    private int columns;
+    private int rows;
+    
     public TabellaDati(JTable jtable, int rows, int columns) {
         this.jtable = jtable;
         this.memoria = new Casella[rows][columns];
         this.columnNames = new String[columns];
+        this.lastResearchPattern = "";
+        this.columns = columns;
+        this.rows = rows;
         char carattere = 'A'-1;
         
         /*
@@ -109,6 +115,45 @@ public class TabellaDati implements TableModel {
     @Override
     public void removeTableModelListener(TableModelListener l) {
         
+    }
+    
+    private Coordinate lastResearchPos;
+    private String     lastResearchPattern;
+    
+    public Coordinate cerca(String pattern) throws PatternNotFoundException {
+        
+        if (!lastResearchPattern.equals(pattern)) {
+            lastResearchPos = new Coordinate(columns-1, rows-1);
+            lastResearchPattern = pattern;
+        }
+        
+        int x = (lastResearchPos.getX()+1)%columns;
+        int y = (lastResearchPos.getY());//%rows;
+        
+        
+        
+        Casella prova;
+        for (; true; y = (y+1)%rows) {
+            for (; x != 0; x = (x+1)%columns) {
+                System.out.println("giro x=" + x + " y=" + y 
+                        + " --- partenza da x=" + lastResearchPos.getX() 
+                        + " y=" + lastResearchPos.getY());
+                prova = memoria[y][x];
+                if (prova != null) {
+                    if (prova.getFormula().equals(pattern) || prova.getRisultato().equals(pattern)) {
+                        lastResearchPos = new Coordinate(x, y);
+                        return lastResearchPos;
+                    }
+                }
+
+                if (x == lastResearchPos.getX() && y == lastResearchPos.getY()) {
+                    throw new PatternNotFoundException("pattern \""+pattern+"\" non trovato");
+                }
+            }
+            // Questa riga evita la ricerca nella prima colonna, quella 
+            // contenente i numeri delle righe
+            x++;
+        }
     }
     
 }
