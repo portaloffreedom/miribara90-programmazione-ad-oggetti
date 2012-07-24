@@ -28,12 +28,11 @@ public class FinestraPrincipale extends JFrame {
         JPanel pannelloRicerca = new JPanel();
         pannelloRicerca.setLayout(new BoxLayout(pannelloRicerca, BoxLayout.X_AXIS));
         
-        ok = new JButton("ok");
         cerca = new JButton("cerca");
+        
         campoTesto = new TextField();
         
         pannelloRicerca.add(campoTesto);
-        pannelloRicerca.add(ok);
         pannelloRicerca.add(cerca);
         
         
@@ -47,6 +46,9 @@ public class FinestraPrincipale extends JFrame {
         contentPane.add(pannelloRicerca, BorderLayout.SOUTH);
         contentPane.add(tabella.getTableHeader(), BorderLayout.PAGE_START);
         contentPane.add(tabella,BorderLayout.CENTER);
+
+        cerca.addActionListener(new Ricerca(tabella, tabella.getTabellaDati(), campoTesto));
+
         
         this.pack();
         //this.setResizable(false);
