@@ -122,6 +122,9 @@ public class TabellaDati implements TableModel {
     
     public Coordinate cerca(String pattern) throws PatternNotFoundException {
         
+        pattern = ".*"+pattern+".*";
+        
+        
         if (!lastResearchPattern.equals(pattern)) {
             lastResearchPos = new Coordinate(columns-1, rows-1);
             lastResearchPattern = pattern;
@@ -140,7 +143,8 @@ public class TabellaDati implements TableModel {
                         + " y=" + lastResearchPos.getY());
                 prova = memoria[y][x];
                 if (prova != null) {
-                    if (prova.getFormula().equals(pattern) || prova.getRisultato().equals(pattern)) {
+                    //if (prova.getFormula().equals(pattern) || prova.getRisultato().equals(pattern)) {
+                    if (prova.getFormula().matches(pattern) || prova.getRisultato().matches(pattern)) {
                         lastResearchPos = new Coordinate(x, y);
                         return lastResearchPos;
                     }
