@@ -46,8 +46,10 @@ public class FinestraPrincipale extends JFrame {
         contentPane.add(pannelloRicerca, BorderLayout.SOUTH);
         contentPane.add(tabella.getTableHeader(), BorderLayout.PAGE_START);
         contentPane.add(tabella,BorderLayout.CENTER);
-
-        cerca.addActionListener(new Ricerca(tabella, tabella.getTabellaDati(), campoTesto));
+        
+        Ricerca ricercatore = new Ricerca(tabella, tabella.getTabellaDati(), campoTesto);
+        cerca.addActionListener(ricercatore);
+        campoTesto.addActionListener(ricercatore);
 
         
         this.pack();
