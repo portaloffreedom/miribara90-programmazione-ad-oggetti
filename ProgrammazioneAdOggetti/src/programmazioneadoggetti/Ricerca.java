@@ -26,7 +26,7 @@ public class Ricerca implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            Coordinate coordinate = this.tabella.cerca(campoTesto.getText());
+            Coordinate coordinate = this.tabellagrafica.getTabellaDati().cerca(campoTesto.getText());
             int x = coordinate.getX();
             int y = coordinate.getY();
             
