@@ -54,6 +54,19 @@ public class TabellaDati implements TableModel, Serializable {
         this.columnNames[0] = "♥";
     }
 
+    public Casella[][] getMemoria() {
+        return memoria;
+    }
+
+    public void setMemoria(Casella[][] memoria) {
+        this.memoria = memoria;
+        jtable.tableChanged(null);
+    }
+
+    public void setJtable(JTable jtable) {
+        this.jtable = jtable;
+    }
+
     @Override
     public int getRowCount() {
         return memoria.length;

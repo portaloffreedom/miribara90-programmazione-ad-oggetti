@@ -31,10 +31,15 @@ public class Tabella extends JTable {
     
     public void salva (String fileName) {
         try {
-            ObjectOutputStream file = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)));
-            
+            System.out.print("Salvataggio in corso");
+            ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream(fileName));
+            System.out.print(".");
             file.writeObject(tabellaDati);
+            System.out.print(".");
+            file.flush();
+            System.out.println(".");
             file.close();
+            System.out.println("file salvato correttamenete");
             
         } catch (FileNotFoundException ex) {
             System.out.println("file non trovato!\n"+ex);
@@ -45,10 +50,16 @@ public class Tabella extends JTable {
     
     public void carica (String fileName) {
         try {
-            ObjectInputStream file = new ObjectInputStream(new BufferedInputStream(new FileInputStream(fileName)));
+            System.out.print("Caricamento in corso");
+            ObjectInputStream file = new ObjectInputStream(new FileInputStream(fileName));
             
+            System.out.print(".");
             tabellaDati = (TabellaDati) file.readObject();
+            System.out.print(".");
+            this.setModel(tabellaDati);
+            System.out.println(".");
             file.close();
+            System.out.println("file caricato correttamenete");
             
         } catch (FileNotFoundException ex) {
             System.out.println("file non trovato!\n"+ex);
@@ -57,6 +68,9 @@ public class Tabella extends JTable {
         } catch (ClassNotFoundException ex) {
             System.out.println("Errore nell'apertura del file!\n"+ex);
         }
+        
+        tabellaDati.setJtable(this);
+        this.tableChanged(null);
     }
     
 }

@@ -10,6 +10,7 @@ import java.awt.HeadlessException;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.*;
 
 /**
@@ -35,11 +36,18 @@ public class FinestraPrincipale extends JFrame {
         menuBar.add(carica);
         menuBar.add(salva);
         
+        
+        final FinestraPrincipale finestraPrincipale = this;
         salva.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                tabella.salva("datiTabella.dat");
+                JFileChooser fc = new JFileChooser();
+                int returnVal = fc.showSaveDialog(finestraPrincipale);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File file = fc.getSelectedFile();
+                    tabella.salva(file.getAbsolutePath());
+                }
             }
         });
         
@@ -47,7 +55,12 @@ public class FinestraPrincipale extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                tabella.carica("datiTabella.dat");
+                JFileChooser fc = new JFileChooser();
+                int returnVal = fc.showOpenDialog(finestraPrincipale);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File file = fc.getSelectedFile();
+                    tabella.carica(file.getAbsolutePath());
+                }
             }
         });
         
