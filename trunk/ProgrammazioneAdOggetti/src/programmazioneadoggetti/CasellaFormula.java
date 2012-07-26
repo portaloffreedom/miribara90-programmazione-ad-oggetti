@@ -59,6 +59,7 @@ public class CasellaFormula extends Casella {
                 case SOTTRAZIONE:
                 case MOLTIPLICAZIONE:
                 case DIVISIONE:
+                case APERTA_PARENTESI:
                     return true;
                 default:
                     return false;
