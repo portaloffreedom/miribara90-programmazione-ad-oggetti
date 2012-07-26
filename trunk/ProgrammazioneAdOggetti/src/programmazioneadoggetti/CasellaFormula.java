@@ -7,7 +7,7 @@ package programmazioneadoggetti;
 import java.io.IOException;
 
 /**
- *
+ * Estende la classe casella
  * @author miriam
  */
 public class CasellaFormula extends Casella {
@@ -83,7 +83,15 @@ public class CasellaFormula extends Casella {
     }
     
     //static private double LASTVAL;
-    
+    /**
+     * funziona interna che aiuta RisolviFormula
+     * @param stream
+     * @param tabella
+     * @param lastVal
+     * @param lastToken
+     * @return
+     * @throws ConversioneNonRiuscitaException 
+     */
     static private double RisolviFormulaRic(StringStream stream, TabellaDati tabella, double lastVal, Token lastToken) throws ConversioneNonRiuscitaException {
         
         Token token = RisolviToken(stream, tabella);
@@ -152,7 +160,13 @@ public class CasellaFormula extends Casella {
         }
       
     }
-    
+    /**
+     * mangia un token dallo stream e lo ritorna
+     * @param stream
+     * @param tabella
+     * @return token
+     * @throws ConversioneNonRiuscitaException 
+     */
     static private Token RisolviToken(StringStream stream, TabellaDati tabella) throws ConversioneNonRiuscitaException {
         try {            
             char primo;

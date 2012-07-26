@@ -7,7 +7,7 @@ package programmazioneadoggetti;
 import java.io.Serializable;
 
 /**
- *
+ * Classe casella
  * @author miriam
  */
 abstract public class Casella implements Serializable {

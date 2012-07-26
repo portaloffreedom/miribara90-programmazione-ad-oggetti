@@ -10,7 +10,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 /**
- *
+ * Classe che memorizza i dati della tabella
  * @author miriam
  */
 public class TabellaDati implements TableModel, Serializable {
@@ -20,7 +20,12 @@ public class TabellaDati implements TableModel, Serializable {
     
     private int columns;
     private int rows;
-    
+    /**
+     * Costruttore
+     * @param jtable tabella grafica su cui operare
+     * @param rows numero di righe
+     * @param columns numero di colonne
+     */
     public TabellaDati(JTable jtable, int rows, int columns) {
         this.jtable = jtable;
         this.memoria = new Casella[rows][columns];
@@ -95,6 +100,12 @@ public class TabellaDati implements TableModel, Serializable {
             return true;
     }
 
+    /**
+     * ritorna il riferimento alla cella 
+     * @param rowIndex riga dell'elelemento
+     * @param columnIndex colonna dell'elemento
+     * @return il riferimento alla cella
+     */
     public Casella getRoughValueAt(int rowIndex, int columnIndex) {
         return memoria[rowIndex][columnIndex];
     }
@@ -107,8 +118,8 @@ public class TabellaDati implements TableModel, Serializable {
         if (casella == null)
             return null;
         else {
-            int x = jtable.getSelectedRow();
-            int y = jtable.getSelectedColumn();
+            int x = jtable.getSelectedRow(); //QUANDO PASSO SOPRA ALLA CASELLA 
+            int y = jtable.getSelectedColumn(); //VEDO SE IL RIS ERA UNA FORMULA
             if (x == rowIndex && y == columnIndex )
                 return casella.getFormula();
             return casella.getRisultato();
@@ -133,7 +144,12 @@ public class TabellaDati implements TableModel, Serializable {
     
     private Coordinate lastResearchPos;
     private String     lastResearchPattern;
-    
+    /**
+     * Ricerca delle coordinate
+     * @param pattern elemento
+     * @return coordinate dell'elemento
+     * @throws PatternNotFoundException 
+     */
     public Coordinate cerca(String pattern) throws PatternNotFoundException {
         
         pattern = ".*"+pattern+".*";

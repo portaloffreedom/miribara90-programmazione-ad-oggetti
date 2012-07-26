@@ -5,7 +5,7 @@
 package programmazioneadoggetti;
 
 /**
- *
+ * Eccezione di conversione non riuscita
  * @author miriam
  */
 public class ConversioneNonRiuscitaException extends Exception {
