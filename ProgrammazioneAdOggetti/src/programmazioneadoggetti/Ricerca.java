@@ -9,14 +9,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- *
- * @author matteo
+ * Classe di ricerca 
+ * @author Miriam
  */
 public class Ricerca implements ActionListener{
     Tabella tabellagrafica;
     TabellaDati tabella;
     TextField campoTesto;
 
+    /**
+     * costruttore
+     * @param tabellagrafica rappresentazione grafica della tabella (jtable)
+     * @param tabella tabella di memorizzazione dei dati
+     * @param campoTesto campo da cui prendere il testo
+     */
     public Ricerca(Tabella tabellagrafica, TabellaDati tabella, TextField campoTesto) {
         this.tabellagrafica = tabellagrafica;
         this.tabella = tabella;

@@ -7,13 +7,19 @@ package programmazioneadoggetti;
 import java.io.IOException;
 
 /**
- * Estende la classe casella
+ * Estende la classe casella implementando le formule
  * @author miriam
  */
 public class CasellaFormula extends Casella {
     private String formula;
     private TabellaDati tabella;
 
+    /**
+     * costruttore 
+     * @param formula formula da risolvere
+     * @param tabella tabella in ingresso
+     * @throws ConversioneNonRiuscitaException se la creazione non ha avuto successo
+     */
     public CasellaFormula(String formula, TabellaDati tabella) throws ConversioneNonRiuscitaException {
         this.formula = formula;
         RisolviFormula(formula, tabella);
@@ -24,7 +30,9 @@ public class CasellaFormula extends Casella {
     public String getFormula() {
         return formula;
     }
-    
+    /**
+     * Enumerato dei vari tipi di token
+     */
     private enum Token {
         RIFERIMENTO,
         NUMERO,
@@ -36,33 +44,49 @@ public class CasellaFormula extends Casella {
         CHIUSA_PARENTESI,
         FINE_STREAM;
         
+        /**
+         * valore numerico del token
+         */
         public double valore;
         
+        /**
+         * Operazione di controllo 
+         * @return vero se il token è un operatore
+         */
         public boolean isOperator() {
             switch (this) {
                 case SOMMA:
                 case SOTTRAZIONE:
                 case MOLTIPLICAZIONE:
                 case DIVISIONE:
-                case APERTA_PARENTESI:
                     return true;
                 default:
                     return false;
             }
         }
         
+        /**
+         * Operazione di controllo
+         * @return vero se il token è un numero o un riferimento ad un numero
+         */
         public boolean isNumber() {
             switch (this) {
                 case NUMERO:
                 case RIFERIMENTO:
-                case CHIUSA_PARENTESI:
                     return true;
                 default:
                     return false;
             }
         }
     }
-            
+          
+    /**
+     * Converte una formula in un double(valore a virgola mobile)
+     * @param formula la formula da convertire
+     * @param tabella tabella in ingresso
+     * @return il valore convertito
+     * @throws ConversioneNonRiuscitaException se la stringa analizzata non è una formula
+     */
     static public double RisolviFormula(String formula, TabellaDati tabella) throws ConversioneNonRiuscitaException {
         StringStream stream = new StringStream(formula);
         
@@ -84,13 +108,13 @@ public class CasellaFormula extends Casella {
     
     //static private double LASTVAL;
     /**
-     * funziona interna che aiuta RisolviFormula
-     * @param stream
-     * @param tabella
-     * @param lastVal
-     * @param lastToken
-     * @return
-     * @throws ConversioneNonRiuscitaException 
+     * funzione interna che aiuta RisolviFormula
+     * @param stream versione in stream della stringa da analizzare 
+     * @param tabella tabella in ingresso
+     * @param lastVal valore numerico letto precedentemente
+     * @param lastToken token letto precedentemente
+     * @return valore double dello stream rimasto
+     * @throws ConversioneNonRiuscitaException se lo stream analizzato non rappresenta una formula
      */
     static private double RisolviFormulaRic(StringStream stream, TabellaDati tabella, double lastVal, Token lastToken) throws ConversioneNonRiuscitaException {
         
@@ -132,20 +156,6 @@ public class CasellaFormula extends Casella {
                 }
                 return lastVal / RisolviFormulaRic(stream, tabella, 0,token);
             
-            /*case APERTA_PARENTESI:
-                if (!lastToken.isOperator()) {
-                    System.err.println("PARENTESI: operatore precedente non operatore");
-                    throw new ConversioneNonRiuscitaException();
-                }
-                //return lastVal - RisolviFormulaRic(stream, tabella, 0,token);
-                
-                double internoParentesi = RisolviFormulaRic(stream, tabella, 0, token);
-                if (!RisolviToken(stream, tabella).equals(Token.CHIUSA_PARENTESI)) {
-                    System.err.println("non hai chiuso le parentesi per bene");
-                    throw new ConversioneNonRiuscitaException();
-                }
-                
-                return internoParentesi;*/
                 
             case FINE_STREAM:
                 if(!lastToken.isNumber()) {
@@ -162,10 +172,10 @@ public class CasellaFormula extends Casella {
     }
     /**
      * mangia un token dallo stream e lo ritorna
-     * @param stream
-     * @param tabella
+     * @param stream input
+     * @param tabella tabella di riferimento
      * @return token
-     * @throws ConversioneNonRiuscitaException 
+     * @throws ConversioneNonRiuscitaException se l'input non è una formula
      */
     static private Token RisolviToken(StringStream stream, TabellaDati tabella) throws ConversioneNonRiuscitaException {
         try {            
@@ -240,117 +250,13 @@ public class CasellaFormula extends Casella {
         }
     }
     
-    /*
-    static public double RisolviFormula(String formula, TabellaDati tabella) throws ConversioneNonRiuscitaException {
-        DataInputStream stream = new DataInputStream(new ByteArrayInputStream(formula.getBytes()));
-        
-        try {
-            if (stream.readChar() != '=')
-                throw new ConversioneNonRiuscitaException();
-        } catch (IOException ex) {
-            throw new ConversioneNonRiuscitaException();
-        }
-        
-        //StringReader stream = new StringReader(formula);
-        
-        double risultato = 0;
-        double prec = 0;
-        char precOP = '='; 
-        /* precOP può significare
-         * 
-         * = appena cominciato
-         * i letto un numero
-         * r letto un riferimento
-         * + somma
-         * - sottrazione
-         * / divisione
-         * * moltiplicazione
-         * 
-         *
-        
-        for (int i=1; i<formula.length(); i++) {
-            stream.mark(5000);
-            int x,y;
-            char switcher = stream.readChar();
-            switch (switcher) {
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                case '0':
-                    try {
-                        stream.reset();
-                        prec = stream.readDouble();
-                    } catch (IOException ex) {
-                        throw new ConversioneNonRiuscitaException();
-                    }
-                    precOP = 'i';
-                    break;
-                    
-                case 'A':
-                case 'B':
-                case 'C':
-                case 'D':
-                case 'E':
-                case 'F':
-                case 'G':
-                case 'H':
-                case 'I':
-                    x=switcher-'A'+1;
-                    try {
-                        y=stream.readInt();
-                    } catch (IOException ex) {
-                        throw new ConversioneNonRiuscitaException();
-                    }
-                    try {
-                        prec = ((CasellaFormula)tabella.getRoughValueAt(y, x)).getRisutatoDouble();
-                    } catch (ClassCastException) {
-                        throw new ConversioneNonRiuscitaException();
-                    }
-                    precOP = 'r';
-                    break;
-                    
-                case '+':
-                    if (precOP != 'i' || precOP != 'r')
-                        throw new ConversioneNonRiuscitaException();
-                    risultato += prec;
-                    precOP = '+';
-                    break;
-                case '-':
-                    if (precOP != 'i' || precOP != 'r')
-                        throw new ConversioneNonRiuscitaException();
-                    break;
-                case '*':
-                    if (precOP != 'i' || precOP != 'r')
-                        throw new ConversioneNonRiuscitaException();
-                    break;
-                case '/':
-                    if (precOP != 'i' || precOP != 'r')
-                        throw new ConversioneNonRiuscitaException();
-                    break;
-                   
-                    
-                case ' ':
-                    break;
-                default:
-                    throw new ConversioneNonRiuscitaException();
-            }
-        }
-        
-        return risultato;
-    }
-    * 
-    */
-    
+    /**
+     * ritorna il valore della casella in formato double
+     * @return risultato
+     * @throws ConversioneNonRiuscitaException 
+     */
     public double getRisutatoDouble() throws ConversioneNonRiuscitaException {
-        //TODO if not da ricalcolare non ricalcolare!
-        
-        return RisolviFormula(formula, tabella);
+       return RisolviFormula(formula, tabella);
     }
 
     @Override

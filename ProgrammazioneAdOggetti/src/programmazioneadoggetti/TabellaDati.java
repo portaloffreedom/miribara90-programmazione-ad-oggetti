@@ -59,15 +59,27 @@ public class TabellaDati implements TableModel, Serializable {
         this.columnNames[0] = "♥";
     }
 
+    /**
+     * Ritorna la matrice che memorizza le caselle
+     * @return 
+     */
     public Casella[][] getMemoria() {
         return memoria;
     }
 
+    /**
+     * Imposta una nuova tabella
+     * @param memoria 
+     */
     public void setMemoria(Casella[][] memoria) {
         this.memoria = memoria;
         jtable.tableChanged(null);
     }
 
+    /**
+     * Ricollega la tabella alla grafica
+     * @param jtable 
+     */
     public void setJtable(JTable jtable) {
         this.jtable = jtable;
     }
