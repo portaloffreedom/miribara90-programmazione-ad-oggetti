@@ -10,7 +10,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- *
+ * Main
  * @author miriam
  */
 public class ProgrammazioneAdOggetti {

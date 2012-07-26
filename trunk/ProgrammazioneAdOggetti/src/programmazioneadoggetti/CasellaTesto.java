@@ -5,13 +5,17 @@
 package programmazioneadoggetti;
 
 /**
- *
+ * Estende la classe casella memorizzando il testo
  * @author miriam
  */
 public class CasellaTesto extends Casella {
     
     private String testo;
 
+    /**
+     * costruttore
+     * @param testo testo da memorizzare
+     */
     public CasellaTesto(String testo) {
         this.testo = testo;
     }

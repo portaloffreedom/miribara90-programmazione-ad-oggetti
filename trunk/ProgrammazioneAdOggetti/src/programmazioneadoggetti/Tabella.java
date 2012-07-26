@@ -8,7 +8,7 @@ import java.io.*;
 import javax.swing.JTable;
 
 /**
- *
+ * Rappresentazione grafica della tabella (JTable)
  * @author miriam
  */
 public class Tabella extends JTable {
@@ -16,6 +16,9 @@ public class Tabella extends JTable {
     static private int righe = 20;
     static private int colonne = 10;
 
+    /**
+     * costruttore
+     */
     public Tabella() {
         super(righe, colonne);
         this.tabellaDati = new TabellaDati(this, righe, colonne);
@@ -25,10 +28,18 @@ public class Tabella extends JTable {
         this.setRowSelectionAllowed(true);
     }
 
+    /**
+     * Ritorna la rappresentazione in memoria della tabella
+     * @return 
+     */
     public TabellaDati getTabellaDati() {
         return tabellaDati;
     }
     
+    /**
+     * Salva su file la tabella
+     * @param fileName percorso del file
+     */
     public void salva (String fileName) {
         try {
             System.out.print("Salvataggio in corso");
@@ -48,6 +59,10 @@ public class Tabella extends JTable {
         }
     }
     
+    /**
+     * Carica da file una tabella salvata in precedenza
+     * @param fileName percorso del file
+     */
     public void carica (String fileName) {
         try {
             System.out.print("Caricamento in corso");

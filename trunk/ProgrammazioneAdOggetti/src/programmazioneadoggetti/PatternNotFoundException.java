@@ -5,8 +5,8 @@
 package programmazioneadoggetti;
 
 /**
- *
- * @author matteo
+ * Eccezione lanciata quando la ricerca non ha ottenuto nessun risultato
+ * @author Miriam
  */
 public class PatternNotFoundException extends Exception {
 
