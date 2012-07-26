@@ -14,7 +14,7 @@ import java.io.File;
 import javax.swing.*;
 
 /**
- *
+ * Classe della finestra principale
  * @author miriam
  */
 public class FinestraPrincipale extends JFrame {
@@ -23,6 +23,10 @@ public class FinestraPrincipale extends JFrame {
     private TextField campoTesto;
     private Tabella tabella;
 
+    /**
+     * Costrutture
+     * @throws HeadlessException 
+     */
     public FinestraPrincipale() throws HeadlessException {
         super("Finestra Principale");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
