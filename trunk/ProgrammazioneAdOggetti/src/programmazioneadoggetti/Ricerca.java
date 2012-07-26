@@ -31,9 +31,12 @@ public class Ricerca implements ActionListener{
             int y = coordinate.getY();
             
             System.out.println("casella trovata a  x="+x+" y="+y);
+            //TODO visualizzazione grafica del risulatato
+            tabellagrafica.changeSelection(y, x, false, false);
             
         } catch (PatternNotFoundException ex) {
             System.out.println(ex);
+            //TODO visualizzazione grafica di non avere trovato la cosa cercata
             
         }
     }

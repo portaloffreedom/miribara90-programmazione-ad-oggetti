@@ -4,11 +4,13 @@
  */
 package programmazioneadoggetti;
 
+import java.io.Serializable;
+
 /**
  *
  * @author miriam
  */
-abstract public class Casella {
+abstract public class Casella implements Serializable {
     
     abstract public String getFormula();
     

@@ -8,6 +8,8 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.HeadlessException;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
@@ -16,7 +18,6 @@ import javax.swing.*;
  */
 public class FinestraPrincipale extends JFrame {
     
-    private JButton ok;
     private JButton cerca;
     private TextField campoTesto;
     private Tabella tabella;
@@ -28,8 +29,30 @@ public class FinestraPrincipale extends JFrame {
         JPanel pannelloRicerca = new JPanel();
         pannelloRicerca.setLayout(new BoxLayout(pannelloRicerca, BoxLayout.X_AXIS));
         
-        cerca = new JButton("cerca");
+        JMenuBar menuBar = new JMenuBar();
+        JMenuItem salva = new JMenuItem("salva");
+        JMenuItem carica = new JMenuItem("carica");
+        menuBar.add(carica);
+        menuBar.add(salva);
         
+        salva.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tabella.salva("datiTabella.dat");
+            }
+        });
+        
+        carica.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tabella.carica("datiTabella.dat");
+            }
+        });
+        
+        
+        cerca = new JButton("cerca");
         campoTesto = new TextField();
         
         pannelloRicerca.add(campoTesto);
@@ -46,6 +69,7 @@ public class FinestraPrincipale extends JFrame {
         contentPane.add(pannelloRicerca, BorderLayout.SOUTH);
         contentPane.add(tabella.getTableHeader(), BorderLayout.PAGE_START);
         contentPane.add(tabella,BorderLayout.CENTER);
+        this.setJMenuBar(menuBar);
         
         Ricerca ricercatore = new Ricerca(tabella, tabella.getTabellaDati(), campoTesto);
         cerca.addActionListener(ricercatore);
