@@ -4,6 +4,7 @@
  */
 package programmazioneadoggetti;
 
+import java.io.Serializable;
 import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -12,10 +13,10 @@ import javax.swing.table.TableModel;
  *
  * @author miriam
  */
-public class TabellaDati implements TableModel {
+public class TabellaDati implements TableModel, Serializable {
     private String[] columnNames;
     private Casella[][] memoria;
-    private JTable jtable;
+    transient private JTable jtable;
     
     private int columns;
     private int rows;
